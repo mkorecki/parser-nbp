@@ -56,7 +56,6 @@ public class MainClass {
 
         } catch (Exception e) {
             System.out.println(e.getLocalizedMessage());
-            System.out.println("Uruchomienie programu z przykładowymi poprawnymi danymi wejściowymi:\njava pl.parser.nbp.MainClass EUR 2013-01-28 2013-01-31");
         }
     }
 }
