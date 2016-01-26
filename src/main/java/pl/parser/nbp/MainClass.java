@@ -17,8 +17,7 @@ import org.joda.time.format.DateTimeFormatter;
 public class MainClass {
 
     static DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd");
-    static int record = 0;
-    static double sum = 0;
+    static String nbpKursyPrefixUrl = "http://www.nbp.pl/kursy/xml/";
 
     public static void main(String[] args) {
         try {
@@ -38,11 +37,11 @@ public class MainClass {
             while (!startDate.isAfter(endDate)) {
                 String dirFileUri = "dir" + (startDate.getYear() != now.getYear() ? startDate.getYear() : "") + ".txt";
 
-                try (BufferedReader br = new BufferedReader(new InputStreamReader(new URL("http://www.nbp.pl/kursy/xml/" + dirFileUri).openStream()))) {
+                try (BufferedReader br = new BufferedReader(new InputStreamReader(new URL(nbpKursyPrefixUrl + dirFileUri).openStream()))) {
                     for (String line; (line = br.readLine()) != null;) {
                         if (line.matches("^c\\d{3}z" + startDate.toString("yy") + startDate.toString("MM") + startDate.toString("dd") + "$")) {
                             // System.out.println("found : " + line);
-                            saxParser.parse(new URI("http://www.nbp.pl/kursy/xml/" + line + ".xml").toString(), xmlHandler);
+                            saxParser.parse(new URI(nbpKursyPrefixUrl + line + ".xml").toString(), xmlHandler);
                             break;
                         }
                     }
